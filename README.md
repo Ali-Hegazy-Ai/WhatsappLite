@@ -22,7 +22,7 @@ WhatsAppLite packages [web.whatsapp.com](https://web.whatsapp.com) into a small,
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation (End Users)](#installation-end-users)
-- [Build From Source (Developers)](#build-from-source-developers)
+- [Generate Your Own Build](#Generate-Your-Own-Build)
 - [Usage](#usage)
 - [Customization](#customization)
 - [Troubleshooting](#troubleshooting)
@@ -85,7 +85,7 @@ That's it — no build tools or developer setup required.
 
 ---
 
-## Build From Source (Developers)
+## Generate Your Own Build
 
 This produces a single standalone `WhatsAppLite.exe` — **not** an `.msi`/installer-based package. There's no setup wizard, no Start Menu entry, and no uninstaller; you just copy the `.exe` wherever you want and run it. To "uninstall," delete the file.
 
