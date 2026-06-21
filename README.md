@@ -69,59 +69,149 @@ You only need these if you're **building from source**. If you just want to use 
 
 ---
 
-## Installation (End Users)
+## Installation (Build From Source)
 
-1. Go to the [Releases](../../releases) page of this repository.
-2. Download the latest Windows installer (`.msi` or `.exe`).
-3. Run the installer and follow the prompts.
-4. Launch **WhatsAppLite** from your Start Menu or desktop shortcut.
-5. Scan the QR code with your phone's WhatsApp app, exactly as you would on web.whatsapp.com.
+> ⚠️ There is currently no pre-built installer in [Releases](../../releases) yet.
+> Until one is published, you'll need to build the app yourself using the steps below.
+> This takes about 15–25 minutes the first time (mostly downloading toolchains),
+> and only a couple of minutes on every build after that.
 
-That's it — no build tools or developer setup required.
+### Step 0 — What you're installing and why
+
+To turn `https://web.whatsapp.com` into a `.exe`/`.msi` installer, your machine needs:
+
+| Tool | What it's for |
+|---|---|
+| **Node.js** | Runs the Pake CLI (a Node.js program) |
+| **pnpm** | Package manager used to install Pake CLI |
+| **Rust + Cargo** | Pake actually compiles a real Rust/Tauri app under the hood |
+| **Microsoft C++ Build Tools** | Needed by Rust to compile native Windows binaries |
+| **WebView2 Runtime** | The native browser engine the final app uses to render WhatsApp Web |
+
+You install all five once. After that, building the app is a single command.
 
 ---
 
-## Build From Source (Developers)
+### Step 1 — Install Node.js
 
-Clone the repository:
-
+1. Go to https://nodejs.org
+2. Download the **LTS** version (22.x or newer recommended, 18.x minimum).
+3. Run the installer, accept defaults, click through to finish.
+4. Verify it worked — open **Command Prompt** or **PowerShell** and run:
 ```bash
-git clone https://github.com/ali-hegazy-ai/WhatsAppLite.git
-cd WhatsAppLite
+   node -v
 ```
+   You should see something like `v22.11.0`. If you get `'node' is not recognized`,
+   restart your terminal (or your PC) and try again — Node adds itself to PATH
+   but existing terminal windows won't see it until reopened.
 
-### Option A — Build using the included project
+---
 
-If this repo contains the generated Tauri project (e.g. a `src-tauri` folder and `package.json`):
+### Step 2 — Install pnpm
 
+In the same terminal:
 ```bash
-# Install dependencies
-pnpm i
-
-# Run in development mode (opens a debug window)
-pnpm run dev
-
-# Build the production installer
-pnpm run build
+npm install -g pnpm
 ```
-
-The finished installer will be output under `src-tauri/target/release/bundle/`.
-
-### Option B — Rebuild from scratch with the Pake CLI
-
-If you'd rather generate the app fresh using Pake itself:
-
+Verify:
 ```bash
-# Install the Pake CLI globally
+pnpm -v
+```
+Expect a version number like `9.12.0`.
+
+---
+
+### Step 3 — Install Rust (via rustup)
+
+1. Go to https://rustup.rs
+2. Download `rustup-init.exe` and run it.
+3. A console window opens asking how you want to proceed — just press **Enter** to accept the default installation (option 1).
+4. Wait for it to finish downloading and installing the stable toolchain.
+5. **Close and reopen your terminal** (Rust modifies PATH — old windows won't pick it up).
+6. Verify:
+```bash
+   rustc --version
+   cargo --version
+```
+   You should see version numbers like `rustc 1.85.0` and `cargo 1.85.0`.
+   If `cargo` isn't found, restart your PC — this fixes PATH issues on Windows 99% of the time.
+
+---
+
+### Step 4 — Install Microsoft C++ Build Tools
+
+Rust needs a native linker on Windows, which comes from Visual Studio's Build Tools (you do **not** need the full Visual Studio IDE).
+
+1. Go to https://visualstudio.microsoft.com/visual-cpp-build-tools/
+2. Click **Download Build Tools**.
+3. Run the installer. When the workload selector appears:
+   - ✅ Check **"Desktop development with C++"**
+   - Leave the default optional components as-is unless you know you need otherwise.
+4. Click **Install** (this is the largest download, ~6-8 GB — grab a coffee).
+5. Restart your computer once installation finishes.
+
+> If you skip this step, your build will fail later with an error mentioning
+> `link.exe not found` or `error: linker 'link.exe' not found`.
+
+---
+
+### Step 5 — Install the WebView2 Runtime
+
+Most Windows 10/11 systems already have this preinstalled (it ships with modern Windows updates and Edge). To be safe:
+
+1. Go to https://developer.microsoft.com/en-us/microsoft-edge/webview2/
+2. Under "Evergreen Bootstrapper," download and run the installer.
+3. It installs silently in a few seconds — no visible confirmation needed.
+
+> Skipping this can cause a **blank white window** when you later launch the built app.
+
+---
+
+### Step 6 — Install the Pake CLI
+
+Back in your terminal:
+```bash
 pnpm install -g pake-cli
+```
+Verify:
+```bash
+pake --version
+```
 
-# Package WhatsApp Web as a desktop app
+> First time running any `pnpm install -g` command, Windows may show a security
+> prompt or PowerShell may block script execution. If you see an error like
+> `cannot be loaded because running scripts is disabled on this system`, open
+> PowerShell **as Administrator** and run:
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+> ```
+> then retry.
+
+---
+
+### Step 7 — (Optional) Get an icon
+
+If you want a custom icon instead of the Pake default:
+1. Find or create a `.ico` file (Windows icon format — you can convert a `.png` at https://icoconvert.com).
+2. Save it somewhere easy to reference, e.g. `C:\Users\You\Downloads\icon.ico`.
+
+If you skip this, just omit the `--icon` flag below and Pake will use its default icon.
+
+---
+
+### Step 8 — Build the app
+
+In your terminal, navigate to wherever you want the output to be created (e.g. your Desktop), then run:
+
+```bash
 pake https://web.whatsapp.com --name WhatsAppLite --icon ./icon.ico --width 1200 --height 800
 ```
 
-Adjust the flags to match the icon and window settings you want — see [Customization](#customization) below for the full list of options.
-
-The installer is generated in the directory you ran the command from.
+What happens:
+1. Pake downloads a Tauri project template (first run only — can take a few minutes).
+2. It compiles the Rust/Tauri app pointing at `web.whatsapp.com`.
+3. You'll see a lot of `cargo` compilation output scroll by — this is normal and can take 3–10 minutes on a first build.
+4. When it finishes, it prints the path to the generated installer, something like:
 
 ---
 
