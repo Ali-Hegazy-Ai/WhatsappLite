@@ -69,6 +69,17 @@ You only need these if you're **building from source**. If you just want to use 
 
 ---
 
+## Installation (End Users)
+
+1. Go to the [Releases](../../releases) page of this repository.
+2. Download `WhatsAppLite.exe` from the latest release.
+3. Double-click `WhatsAppLite.exe` to launch it — there's no installer or setup wizard, the .exe is the app.
+4. (Optional) Move it to a folder of your choice and create a desktop/Start Menu shortcut yourself, since there's no installer to do this for you.
+5. Scan the QR code with your phone's WhatsApp app, exactly as you would on web.whatsapp.com.
+
+That's it — no build tools or developer setup required.
+
+---
 ## Installation (Build From Source)
 
 > ⚠️ There is currently no pre-built installer in [Releases](../../releases) yet.
