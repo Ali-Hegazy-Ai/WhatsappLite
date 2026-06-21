@@ -16,7 +16,6 @@ This project is generated using Pake and Tauri.
 - Pake: https://github.com/tw93/Pake
 - Tauri: https://tauri.app
 
-Please review their licenses before redistributing generated binaries.
 ---
 
 ## Screenshots
