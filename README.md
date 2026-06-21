@@ -83,7 +83,7 @@ That's it — no build tools or developer setup required.
 Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/WhatsAppLite.git
+git clone https://github.com/ali-hegazy-ai/WhatsAppLite.git
 cd WhatsAppLite
 ```
 
