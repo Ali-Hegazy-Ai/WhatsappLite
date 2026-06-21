@@ -2,12 +2,21 @@
 
 > An unofficial, lightweight desktop wrapper for WhatsApp Web — built with **Pake** and **Tauri**.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
+
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6.svg)](#installation-end-users)
 [![Built with](https://img.shields.io/badge/built%20with-Rust%20%2B%20Tauri-orange.svg)](#tech-stack)
 
 WhatsAppLite packages [web.whatsapp.com](https://web.whatsapp.com) into a small, native desktop application, so you get a dedicated WhatsApp window without keeping a browser tab open. It uses your existing WhatsApp account — there's no separate sign-up or account system.
 
+---
+## Attribution
+
+This project is generated using Pake and Tauri.
+
+- Pake: https://github.com/tw93/Pake
+- Tauri: https://tauri.app
+
+Please review their licenses before redistributing generated binaries.
 ---
 
 ## Screenshots
@@ -40,7 +49,7 @@ WhatsAppLite packages [web.whatsapp.com](https://web.whatsapp.com) into a small,
 - Dedicated WhatsApp window, separate from your browser
 - Uses your existing WhatsApp account — just scan the QR code as usual
 - Built with Rust and Tauri for speed and a small memory footprint
-- Open source and easy to customize (icon, window size, title bar, etc.)
+  
 
 ## Tech Stack
 
@@ -358,11 +367,6 @@ Contributions are welcome!
 
 For larger changes, please open an issue first to discuss what you'd like to change.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE) — feel free to use, modify, and distribute it.
-
-> Replace this with your actual license if it's different (e.g. GPL-3.0, since Pake itself is GPL-3.0 licensed — check Pake's license terms if you're redistributing parts of its generated project).
 
 ## Disclaimer
 
