@@ -68,6 +68,8 @@ You only need these if you're **building from source**. If you just want to use 
 | Windows **Long Paths** setting | Enabled | Required — see [Step 0: Enable Long Paths](#step-0--enable-long-paths-on-windows-critical) below |
 
 > First-time builds set up the Rust/Tauri toolchain and can take a few minutes. Subsequent builds are much faster.
+>
+> Don't want to do any of this by hand? Use the [Quick Build script](#quick-build-automated-script) instead — it automates this entire section.
 
 ---
 
@@ -81,12 +83,34 @@ You only need these if you're **building from source**. If you just want to use 
 
 That's it — no build tools or developer setup required.
 
-
 ---
 
 ## Build From Source (Developers)
 
 This produces a single standalone `WhatsAppLite.exe` — **not** an `.msi`/installer-based package. There's no setup wizard, no Start Menu entry, and no uninstaller; you just copy the `.exe` wherever you want and run it. To "uninstall," delete the file.
+
+### Quick Build (automated script)
+
+If you'd rather not run each step by hand, there's a `build.ps1` script in this repo that automates the entire process below: it checks/enables Long Paths, checks/installs Node, pnpm, and the Pake CLI, verifies Rust/MSVC/WebView2 are present, and runs the final build command.
+
+1. Download or clone this repo so you have `build.ps1` locally.
+2. Open PowerShell in that folder.
+3. If you've never run a local script before, allow it once:
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+   ```
+4. Run it:
+   ```powershell
+   .\build.ps1
+   ```
+   Or with a custom icon/name/size:
+   ```powershell
+   .\build.ps1 -AppName "WhatsAppLite" -IconPath ".\icon.ico" -Width 1200 -Height 800
+   ```
+
+The script skips any step that's already satisfied, so it's safe to re-run. If it stops at Long Paths and asks to reboot, reboot and just run `.\build.ps1` again — it'll pick up where it left off.
+
+If you'd rather understand or run each step yourself, the full manual walkthrough is below.
 
 ### What you're installing and why
 
