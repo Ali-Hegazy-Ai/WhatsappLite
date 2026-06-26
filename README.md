@@ -4,6 +4,7 @@
 
 
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6.svg)](#installation-end-users)
+[![Platform](https://img.shields.io/badge/platform-Ubuntu-0078D6.svg)](#installation-end-users)
 [![Built with](https://img.shields.io/badge/built%20with-Rust%20%2B%20Tauri-orange.svg)](#tech-stack)
 
 WhatsAppLite packages [web.whatsapp.com](https://web.whatsapp.com) into a small, native desktop application, so you get a dedicated WhatsApp window without keeping a browser tab open. It uses your existing WhatsApp account — there's no separate sign-up or account system.
